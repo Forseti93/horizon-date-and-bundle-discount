@@ -1,0 +1,1 @@
+C:/Users/serge/Documents/IT/Shopify/Test tasks/Bundles + date discount/Antigravity generated/horizon/AGENTS.md

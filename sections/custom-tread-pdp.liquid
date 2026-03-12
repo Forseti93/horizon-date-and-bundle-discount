@@ -1,0 +1,547 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600&display=swap');
+
+  .custom-tread-pdp * {
+    box-sizing: border-box;
+  }
+
+  .custom-tread-pdp {
+    font-family: 'Inter', sans-serif;
+    color: #000;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  @media (min-width: 1024px) {
+    .custom-tread-pdp {
+      flex-direction: row;
+      gap: 64px;
+      padding: 64px;
+    }
+  }
+
+  .tread-gallery {
+    flex: 1;
+    max-width: 700px;
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #f5f5f5;
+  }
+
+  .tread-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tread-slider::-webkit-scrollbar {
+    display: none;
+  }
+  .tread-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    position: relative;
+  }
+  .tread-slide img,
+  .tread-slide svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 700/870;
+    object-fit: cover;
+  }
+
+  .tread-slider-nav {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+  }
+  .tread-dot {
+    width: 40px;
+    height: 6px;
+    background: #d9d9d9;
+    border-radius: 16px;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+  }
+  .tread-dot.active {
+    background: #636363;
+  }
+
+  .tread-info {
+    flex: 1;
+    max-width: 548px;
+  }
+  .tread-title {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 39px;
+    margin: 0 0 8px 0;
+  }
+  .tread-price-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+  .tread-price {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+  .tread-compare-price {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    text-decoration: line-through;
+    color: #636363;
+  }
+
+  .tread-section-title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 22px;
+    margin-bottom: 16px;
+  }
+
+  .tread-addon {
+    display: flex;
+    align-items: center;
+    border: 1px solid #000;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 32px;
+    cursor: pointer;
+  }
+  .tread-checkbox-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+  }
+  .tread-checkbox-container input {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    accent-color: #000;
+  }
+  .tread-addon-info {
+    flex: 1;
+  }
+  .tread-addon-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+  }
+  .tread-addon-prices {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tread-addon-price {
+    font-size: 15px;
+    font-weight: 400;
+  }
+  .tread-addon-compare {
+    font-size: 13px;
+    font-weight: 400;
+    text-decoration: line-through;
+    color: #000;
+  }
+  .tread-addon-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    object-fit: cover;
+    background: #f5f5f5;
+  }
+  .tread-addon-svg {
+    width: 60px;
+    height: 60px;
+  }
+
+  .tread-variants {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .tread-variant-card {
+    position: relative;
+    border: 2px solid #d5d5d5;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .tread-variant-card.sold-out {
+    background: #d9d9d9;
+    border-color: #d9d9d9;
+    cursor: not-allowed;
+  }
+  .tread-variant-card.sold-out .tread-variant-desc {
+    text-decoration: line-through;
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .tread-variant-card.active {
+    background: #fff2e2;
+    border-color: #f28500;
+  }
+
+  .tread-radio-container {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #808080;
+    margin-right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tread-variant-card.active .tread-radio-container {
+    border-color: #f28500;
+  }
+  .tread-radio-container .tread-radio-dot {
+    width: 8px;
+    height: 8px;
+    background: #f28500;
+    border-radius: 50%;
+    display: none;
+  }
+  .tread-variant-card.active .tread-radio-dot {
+    display: block;
+  }
+  .tread-variant-card.sold-out .tread-radio-container {
+    border-color: #808080;
+  }
+
+  .tread-variant-info {
+    flex: 1;
+  }
+  .tread-desc-top {
+    font-size: 14px;
+    line-height: 22px;
+    color: rgba(0, 0, 0, 0.75);
+  }
+  .tread-desc-bottom {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 22px;
+    color: rgba(0, 0, 0, 0.75);
+  }
+
+  .tread-variant-badge-layer {
+    position: absolute;
+    top: -12px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    padding: 0 12px;
+    height: 23px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+  }
+  .bg-gray {
+    background: #5f5f5f;
+  }
+  .bg-orange {
+    background: #f28500;
+  }
+
+  .tread-availability {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.75);
+    font-family: 'Poppins', sans-serif;
+  }
+  .tread-variant-card.sold-out .tread-availability {
+    color: rgba(0, 0, 0, 0.5);
+    text-decoration: line-through;
+  }
+
+  .tread-add-button {
+    width: 100%;
+    height: 57px;
+    background: #f28500;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    border: none;
+    border-radius: 41px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tread-add-button:hover {
+    opacity: 0.9;
+  }
+  .tread-add-button:disabled {
+    background: #d9d9d9;
+    cursor: not-allowed;
+  }
+</style>
+
+<div class="custom-tread-pdp" id="tread-pdp-{{ section.id }}">
+  <div class="tread-gallery">
+    <div class="tread-slider" id="js-slider-{{ section.id }}">
+      {% assign main_product = section.settings.main_product %}
+      {% if main_product and main_product.images.size > 0 %}
+        {% for image in main_product.images %}
+          <div class="tread-slide">
+            {{ image | image_url: width: 1000 | image_tag: loading: 'lazy' }}
+          </div>
+        {% endfor %}
+      {% else %}
+        <!-- Placeholders if product not configured -->
+        <div class="tread-slide">
+          {{ 'product-1' | placeholder_svg_tag }}
+        </div>
+        <div class="tread-slide">
+          {{ 'product-2' | placeholder_svg_tag }}
+        </div>
+      {% endif %}
+    </div>
+    <div class="tread-slider-nav">
+      {% assign img_count = main_product.images.size | default: 2 %}
+      {% for i in (1..img_count) %}
+        <button class="tread-dot {% if forloop.first %}active{% endif %}" aria-label="Slide {{ i }}"></button>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="tread-info">
+    <h1 class="tread-title">{{ main_product.title | default: 'Tread' }}</h1>
+
+    <div class="tread-price-container">
+      <span class="tread-price" id="js-main-price-{{ section.id }}">€300</span>
+      <span class="tread-compare-price">€350</span>
+    </div>
+
+    <!-- Add ons -->
+    <h2 class="tread-section-title">Add-ons</h2>
+    {% assign addon = section.settings.addon_product %}
+    <label class="tread-addon">
+      <div class="tread-checkbox-container">
+        <input
+          type="checkbox"
+          id="js-addon-checkbox-{{ section.id }}"
+          value="{{ addon.first_available_variant.id | default: 'addon-dummy' }}"
+        >
+      </div>
+      <div class="tread-addon-info">
+        <h3 class="tread-addon-title">{{ addon.title | default: 'Dumbbells' }}</h3>
+        <div class="tread-addon-prices">
+          {% if addon %}
+            <span class="tread-addon-price">{{ addon.price | money }}</span>
+            {% if addon.compare_at_price > addon.price %}
+              <span class="tread-addon-compare">{{ addon.compare_at_price | money }}</span>
+            {% endif %}
+          {% else %}
+            <span class="tread-addon-price">€55</span>
+            <span class="tread-addon-compare">€65</span>
+          {% endif %}
+        </div>
+      </div>
+      {% if addon and addon.featured_image %}
+        {{ addon.featured_image | image_url: width: 120 | image_tag: class: 'tread-addon-img', loading: 'lazy' }}
+      {% else %}
+        <div class="tread-addon-svg">
+          {{ 'product-3' | placeholder_svg_tag }}
+        </div>
+      {% endif %}
+    </label>
+
+    <!-- Variants / Delivery Dates -->
+    <div class="tread-variants">
+      <!-- Option 1: Sold out -->
+      <div class="tread-variant-card sold-out">
+        <div class="tread-variant-badge-layer bg-gray">Sold Out</div>
+        <div class="tread-radio-container"><div class="tread-radio-dot"></div></div>
+        <div class="tread-variant-info">
+          <div class="tread-desc-top tread-variant-desc">Delivery date: 16-18 August</div>
+        </div>
+        <div class="tread-availability">0% available</div>
+      </div>
+
+      <!-- Option 2: Active (23-25 Sept) -->
+      <div
+        class="tread-variant-card active js-variant-card"
+        data-price="€300"
+        data-variant-id="{% if main_product.variants.size > 0 %}{{ main_product.variants[0].id }}{% else %}dummy-23-25{% endif %}"
+      >
+        <div class="tread-variant-badge-layer bg-orange">€50 discount</div>
+        <div class="tread-radio-container"><div class="tread-radio-dot"></div></div>
+        <div class="tread-variant-info">
+          <div class="tread-desc-top">Next Delivery</div>
+          <div class="tread-desc-bottom">Date: 23-25 September</div>
+        </div>
+        <div class="tread-availability">52% available</div>
+      </div>
+
+      <!-- Option 3: Pre-order (8-10 Oct) -->
+      <div
+        class="tread-variant-card js-variant-card"
+        data-price="€250"
+        data-variant-id="{% if main_product.variants.size > 1 %}{{ main_product.variants[1].id }}{% else %}dummy-8-10{% endif %}"
+      >
+        <div class="tread-variant-badge-layer bg-orange">€100 discount</div>
+        <div class="tread-radio-container"><div class="tread-radio-dot"></div></div>
+        <div class="tread-variant-info">
+          <div class="tread-desc-top">Pre-order:</div>
+          <div class="tread-desc-bottom">Date: 8-10 October</div>
+        </div>
+        <div class="tread-availability">98% available</div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <button class="tread-add-button" id="js-add-to-cart-{{ section.id }}">Add to cart</button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const sectionId = '{{ section.id }}';
+    const container = document.getElementById('tread-pdp-' + sectionId);
+    if (!container) return;
+
+    // Slider Logic
+    const slider = container.querySelector('#js-slider-' + sectionId);
+    const slides = container.querySelectorAll('.tread-slide');
+    const dots = container.querySelectorAll('.tread-dot');
+
+    function updateSliderNav() {
+      const scrollPos = slider.scrollLeft;
+      const slideWidth = slider.clientWidth;
+      const activeIndex = Math.round(scrollPos / slideWidth);
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === activeIndex);
+      });
+    }
+
+    slider.addEventListener('scroll', updateSliderNav);
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        const slideWidth = slider.clientWidth;
+        slider.scroll({ left: index * slideWidth, behavior: 'smooth' });
+      });
+    });
+
+    // Variant Selection Logic
+    const variantCards = container.querySelectorAll('.js-variant-card');
+    const mainPriceLabel = container.querySelector('#js-main-price-' + sectionId);
+    let selectedVariantId = container.querySelector('.js-variant-card.active')?.dataset.variantId || null;
+
+    variantCards.forEach((card) => {
+      card.addEventListener('click', () => {
+        variantCards.forEach((c) => c.classList.remove('active'));
+        card.classList.add('active');
+
+        const price = card.dataset.price;
+        if (price) mainPriceLabel.innerText = price;
+
+        selectedVariantId = card.dataset.variantId;
+      });
+    });
+
+    // Add To Cart Logic
+    const addToCartBtn = container.querySelector('#js-add-to-cart-' + sectionId);
+    const addonCheckbox = container.querySelector('#js-addon-checkbox-' + sectionId);
+
+    addToCartBtn.addEventListener('click', () => {
+      if (!selectedVariantId) return;
+
+      const identifier = 'bundle_' + Date.now();
+      const items = [
+        {
+          id: selectedVariantId,
+          quantity: 1,
+          properties: { _bundle_id: identifier },
+        },
+      ];
+
+      if (addonCheckbox.checked && addonCheckbox.value) {
+        items.push({
+          id: addonCheckbox.value,
+          quantity: 1,
+          properties: { _bundle_id: identifier },
+        });
+      }
+
+      // If we don't have real variant IDs, exit early
+      if (selectedVariantId.startsWith('dummy') || addonCheckbox.value.startsWith('dummy')) {
+        const itemsStr = items.map((i) => i.id).join(', ');
+        alert(
+          `Theme configuration required.\nPlease assign valid products in the theme editor for this section.\n\nSimulated adding:\n${itemsStr}`
+        );
+        return;
+      }
+
+      addToCartBtn.disabled = true;
+      addToCartBtn.innerText = 'Adding...';
+
+      fetch(window.Shopify.routes.root + 'cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: items }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          window.location.href = window.Shopify.routes.root + 'cart';
+        })
+        .catch((error) => {
+          console.error('Error adding to cart:', error);
+          addToCartBtn.disabled = false;
+          addToCartBtn.innerText = 'Add to cart';
+        });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Custom Tread PDP",
+  "settings": [
+    {
+      "type": "product",
+      "id": "main_product",
+      "label": "Main Product (Tread)"
+    },
+    {
+      "type": "product",
+      "id": "addon_product",
+      "label": "Add-on Product (Dumbbells)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Tread PDP"
+    }
+  ]
+}
+{% endschema %}
