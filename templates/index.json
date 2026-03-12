@@ -9,12 +9,21 @@
  */
 {
   "sections": {
+    "custom_tread_pdp_MD4HEf": {
+      "type": "custom-tread-pdp",
+      "name": "Custom Tread PDP",
+      "settings": {
+        "main_product": "tread",
+        "addon_product": "dumbbells"
+      }
+    },
     "main": {
       "type": "hello-world",
       "settings": {}
     }
   },
   "order": [
+    "custom_tread_pdp_MD4HEf",
     "main"
   ]
 }
